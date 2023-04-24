@@ -1,0 +1,83 @@
+// COPYRIGHTS.© ABANOB AYOUB
+//Assembly Prog.
+/******************************************************************************
+Program's Logic:
+here are some of the Fibonacci Numbers:
+	        			1	2	3	4	5	6	7	8	9	10
+fib. numbers>>	0	1	1	2	3	5	8	13	21	34
+
+The idea is you add the first and second numbers. Then reassign the first number to be 
+the second number, and the second to be the third number which is the sum of the first and second.
+You will repeat these process'n' times where 'n' is the user input. 
+At the end the fibonacci number that the user wants will be the first numer.
+******************************************************************************/
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+
+	int firstNum = 0;
+	int secondNum = 1;
+	int thirdNum;
+	int userNum;
+	int counter = 1;
+	cout << "What Fibonacci number do you want to see? ";
+	cin >> userNum;
+
+	__asm {
+		mov eax, userNum
+
+		; when the user enter 1
+		cmp eax, 1
+		je fibNum1
+
+		; when the user enter 2
+		cmp eax, 2
+		je fibNum2
+
+		; when the user enter a number other than 1 or 2
+		jmp fibNumX
+
+		fibNum1:
+		mov firstNum,0
+		jmp quit
+
+		fibNum2:
+		mov firstNum,1
+		jmp quit
+			
+		fibNumX:
+		mov eax, firstNum
+			mov ebx, secondNum
+
+			; add thirdNum = firstNum + secondNum
+			add eax, ebx
+			mov thirdNum, eax
+
+			; firstNum = secondNum
+			mov eax, secondNum
+			mov firstNum, eax
+
+			; secondNum = thirdNum
+			mov eax, thirdNum
+			mov secondNum, eax
+
+		inc counter
+		mov eax, counter
+		cmp eax, userNum
+		jb fibNumX  ; jump to fibNumX "if" the userNum is below/less than the counter
+		jmp quit
+
+		quit:
+
+	}
+
+	cout << "Fibonacci number: " << firstNum<<endl;
+
+	return 0;
+}
+
+// COPYRIGHTS.© ABANOB AYOUB
+// COPYRIGHTS.© ABANOB AYOUB
